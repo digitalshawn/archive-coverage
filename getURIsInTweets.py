@@ -19,7 +19,7 @@ def main():
     tweet = json.loads(tweetRaw)
     if 'entities' in tweet and 'urls' in tweet['entities']:
       for url in tweet['entities']['urls']:
-        print "{0},{1},{2}".format(url['expanded_url'],url['url'],tweet['created_at'])
+        print "{0}\t{1}\t{2}\t{3}".format(url['expanded_url'],url['url'],tweet['created_at'],tweet['id'])
 
 
 if __name__ == "__main__":
