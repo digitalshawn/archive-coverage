@@ -6,7 +6,7 @@ Generic treemap, based on http://bost.ocks.org/mike/treemap/
 <html>
 <head><style>#watch-discussion, #watch7-discussion, ytd-comments { display: none; }</style>
 <meta charset="utf-8">
-<title>Zoomable treemap template</title>
+<title>Intersection Treemaps</title>
 <style>
 
 #chart {
@@ -16,17 +16,19 @@ Generic treemap, based on http://bost.ocks.org/mike/treemap/
 
 .title {
     font-weight: bold;
-    font-size: 24px;
+    font-size: 48px;
     text-align: center;
     margin-top: 6px;
     margin-bottom: 6px;
 }
 text {
   pointer-events: none;
+  font-size: 38px;
 }
 
 .grandparent text {
   font-weight: bold;
+  font-size: 18px;
 }
 
 rect {
@@ -88,8 +90,8 @@ var defaults = {
     rootname: "TOP",
     format: ",d",
     title: "",
-    width: 960,
-    height: 500
+    width: 1850,
+    height: 960
 };
 
 function main(o, data) {
@@ -324,7 +326,7 @@ if (window.location.hash === "") {
         if (!err) {
             console.log(res);
             var data = d3.nest().key(function(d) { return d.tld; }).key(function(d) { return d.domain; }).entries(res);
-            main({title: "Title to Change"}, {key: "Domains", values: data});
+            main({title: "NSF IA Occupy Wall Street"}, {key: "Domains", values: data});
         }
     });
 }
