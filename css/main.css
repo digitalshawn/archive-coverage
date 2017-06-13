@@ -14,7 +14,12 @@ body {
   color: #222; }
 
 .ows {
-    background-image: url(../img/ows-bg.jpg);
-    background-size: cover;
-    padding-bottom: 5rem;
+  background-image: url(../img/ows-bg.jpg);
+  background-size: cover;
+  padding-bottom: 5rem;
+}
+
+.texture {
+  background-image: url("https://www.transparenttextures.com/patterns/grilled-noise.png");
+  background-color: #eff7f6;
 }
