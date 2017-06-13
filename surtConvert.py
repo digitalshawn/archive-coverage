@@ -15,4 +15,4 @@ with open('/mnt/intersect/tweets/combined.out','r') as f:
     tweetId = fields[3]
  
     date14 =  parse(datetime).strftime('%Y%m%d%H%M%S')
-    print '{0}\t{1}\t{2}'.format(expandedURI, date14, tweetId)
+    print '{0}\t{1}\t{2}'.format(surt(expandedURI), date14, tweetId)
