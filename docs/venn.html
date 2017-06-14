@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Venn Diagrams</title>
+    <style>
+      body {
+        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        background: #222;
+        text-align: center;
+      }
+      h1 {
+        color: #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Domian Distribution Among IAGE, NSFIA, and Twitter Outlinks</h1>
+    <div id="venn"></div>
+    <script src="javascript/d3.v4.min.js"></script>
+    <script src="javascript/venn.js"></script>
+    <script>
+    var sets = [
+                {sets:["IAGE"], size: 94989, label: "IAGE (94,989)"},
+                {sets:["NSFIA"], size: 62331, label: "NSFIA (62,331)"},
+                {sets:["Twitter"], size: 301438, label: "Twitter (301,438)"},
+                {sets: ["IAGE", "NSFIA"], size: 674, label: "Both Collections (674)"},
+                {sets: ["IAGE", "Twitter"], size: 16211, label: "Twitter in IAGE (16211)",},
+                {sets: ["NSFIA", "Twitter"], size: 623, label: "Twitter in NSFIA (623)"},
+                {sets: ["IAGE", "NSFIA", "Twitter"], size: 433, label: "Twitter in Both (433)"}
+        ];
+
+    var chart = venn.VennDiagram()
+        .wrap(false)
+        .fontSize("16px")
+        .width(640)
+        .height(640);
+
+    function updateVenn(sets) {
+        var div = d3.select("#venn").datum(sets);
+        var layout = chart(div),
+            circles = layout.circles;
+        var cols = ["blue", "red", "green"];
+
+        div.selectAll(".label").style("fill", "white");
+        div.selectAll(".venn-circle path").style("fill-opacity", 0.0);
+        div.selectAll(".label").style("fill-opacity", 1.0);
+
+        // add new bounding boxes
+        layout.enter
+            .filter(function(d) { return d.sets.length == 1; })
+            .append("rect")
+            .attr("class", "box")
+            .style("stroke", "#666")
+            .style("stroke-width", "1")
+            .style("fill-opacity", "0.4")
+            .style("fill", function(d, i) { return cols[i]; })
+            .attr("height", 0)
+            .attr("width", 0)
+            .attr("x", chart.width() /2)
+            .attr("y", chart.height() /2);
+
+        // move existing
+        layout.update
+            .selectAll(".box")
+            .filter(function(d) { return d.sets in circles; })
+            .attr("x", function(d) {  var c = circles[d.sets[0]]; return c.x - c.radius; })
+            .attr("y", function(d) {  var c = circles[d.sets[0]]; return c.y - c.radius; })
+            .attr("height", function(d) {  var c = circles[d.sets[0]]; return 2 * c.radius; })
+            .attr("width", function(d) {  var c = circles[d.sets[0]]; return 2 * c.radius; })
+            .style("fill", function(d, i) { return cols[i]; })
+            //.style("fill-opacity", "0.0")
+
+        // remove old (shrinking to middle)
+        layout.exit
+            .select(".box")
+            .attr("x", chart.width() /2)
+            .attr("y", chart.height() /2)
+            .attr("width", 0)
+            .attr("height", 0)
+            .style("font-size", "0px");
+
+        return layout;
+    }
+
+    // add/remove set areas to showcase transitions
+    updateVenn(sets.slice(0, 2));
+    var i = 1, direction = 1;
+    window.setInterval( function() {
+        i += direction;
+        if (i >= sets.length) {
+            direction = -1;
+        } else if (i <= 1) {
+            direction = 1;
+        }
+        updateVenn(sets.slice(0, i));
+    }, 1500);
+
+    </script>
+  </body>
+</html>
