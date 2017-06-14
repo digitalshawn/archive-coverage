@@ -73,8 +73,8 @@ rect.parent {
 <body>
 <div id="chart"></div>
 
-<script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
-<script src="https://d3js.org/d3.v3.min.js"></script>
+<script src="javascript/jquery-1.7.2.min.js"></script>
+<script src="javascript/d3.v3.min.js"></script>
 <script>
 
 
@@ -322,7 +322,7 @@ function main(o, data) {
 }
 
 if (window.location.hash === "") {
-    d3.json("iage-domains.json", function(err, res) {
+    d3.json("data/iage-domains.json", function(err, res) {
         if (!err) {
             console.log(res);
             var data = d3.nest().key(function(d) { return d.tld; }).key(function(d) { return d.domain; }).entries(res);
